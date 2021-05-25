@@ -81,13 +81,13 @@ jobs:
           go get github.com/davidrjonas/semver-cli
           git clone git@github.com:AlbertHahn/Krones-Marketplace.git
           cd Krones-Marketplace
-          sed -i "s/appVersion:.*/appVersion: ${{ env.RELEASE_VERSION }}/g" charts/node-red/Chart.yaml
-          current_chart_version=$(cat charts/node-red/Chart.yaml | grep "^version: .*" | grep -o "[0-9.]\+")
+          sed -i "s/appVersion:.*/appVersion: ${{ env.RELEASE_VERSION }}/g" charts/node-red-3d-dashboard/Chart.yaml
+          current_chart_version=$(cat charts/node-red-3d-dashboard/Chart.yaml | grep "^version: .*" | grep -o "[0-9.]\+")
           next_chart_version=$(semver-cli inc minor $current_chart_version)
           echo "CHART_VERSION=${next_chart_version}" >> $GITHUB_ENV
           echo "Current chart version: $current_chart_version"
           echo "Next chart version: $next_chart_version"
-          sed -i "s/version:.*/version: $next_chart_version/g" charts/node-red/Chart.yaml
+          sed -i "s/version:.*/version: $next_chart_version/g" charts/node-red-3d-dashboard/Chart.yaml
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
@@ -96,5 +96,5 @@ jobs:
       - uses: ifaxity/wait-on-action@v1
         name: wait for helm release
         with:
-          resource: https://github.com/AlbertHahn/poc-demo-charts/releases/download/node-red-${{ env.CHART_VERSION }}/node-red-${{ env.CHART_VERSION }}.tgz
+          resource: https://github.com/AlbertHahn/poc-demo-charts/releases/download/node-red-3d-dashboard-${{ env.CHART_VERSION }}/node-red-3d-dashboard-${{ env.CHART_VERSION }}.tgz
           interval: 10s
